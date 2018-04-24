@@ -17,7 +17,7 @@ while True:
     while True:
         try:
             widthInFeet = float(input("Please enter the number of FEET in the WIDTH of your project: \n"))
-            if type(widthInFeet) == float:
+            if float(widthInFeet):
                 break
         except ValueError:
             print("Please enter a numerical value. Ex 55.2 - \n")
@@ -25,24 +25,34 @@ while True:
     while True:
         try:
             depthInInches = float(input("Please enter the number of INCHES in the DEPTH of your project: \n"))
-            if type(depthInInches) == float:
+            if float(depthInInches):
                 break
         except ValueError:
             print("Please enter a numerical value. Ex 55.2 - \n")
             continue
 
     confirm = input("You have entered a length of {} feet, a width of {} feet, and a depth of {} inches.\n"
-                    "\nPlease enter \"yes\" if this is correct or \"no\" to edit your input:\n"
+                    "\nPlease enter \"yes\" if this is correct or \"no\" to edit your input: "
                     .format(lengthInFeet, widthInFeet, depthInInches)).lower()
+
+
+    while True:
+        if confirm == "yes" or confirm == "no":
+            break
+        else:
+            confirm = input("Please enter \"yes\" or \"no\": ")
+            continue
 
     if confirm == "yes":
         break
-    elif confirm == "no":
+    if confirm == "no":
         continue
-    else:
-        print("Please answer \"yes\" or \"no\"\n")
-        continue
+        print()
 
+def calculateCubiFeet(length, width, depth):
+    inchesToFeet = depth / 12
+    cubicFeetVolume = (length * width * inchesToFeet)
+    return cubicFeetVolume
 
 
 def calculateCubicYards(length, width, depth):
@@ -50,5 +60,13 @@ def calculateCubicYards(length, width, depth):
     cubicVolume = ((length * width * inchesToFeet) / 27)
     return cubicVolume
 
-print("Your project will require %.3f cubic yards of material" % (calculateCubicYards(lengthInFeet, widthInFeet,
+print()
+print("Your project will require %.3f cubic feet of material." % (calculateCubiFeet(lengthInFeet, widthInFeet,
+                                                                  depthInInches)))
+print()
+print("***NOTE*** Most supply companies sell material in cubic yards. See next result for cubic yards")
+print()
+
+
+print("Your project will require %.3f cubic yards of material." % (calculateCubicYards(lengthInFeet, widthInFeet,
                                                              depthInInches)))
